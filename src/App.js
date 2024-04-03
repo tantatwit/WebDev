@@ -1,4 +1,3 @@
-// App.js
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './Home';
@@ -14,15 +13,23 @@ const App = () => {
   // Define state to store recipe data
   const [recipes, setRecipes] = useState([]);
 
+  // Function to add a new recipe to the state
+  const handleRecipeSubmission = (newRecipe) => {
+    setRecipes([...recipes, newRecipe]);
+  };
+
   return (
     <Router>
       <div className="App">
         <Header />
         <Switch>
           <Route exact path="/" component={Home} />
-          {/* Pass recipes state to Recipe component */}
+          {/* Pass recipes state and handleRecipeSubmission function to Recipe component */}
           <Route path="/recipe" render={(props) => <Recipe {...props} recipes={recipes} />} />
-          <Route path="/submit-recipe" component={RecipeSubmission} />
+          <Route path="/submit-recipe">
+            {/* Pass handleRecipeSubmission function to RecipeSubmission component */}
+            <RecipeSubmission onSubmit={handleRecipeSubmission} />
+          </Route>
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />
         </Switch>

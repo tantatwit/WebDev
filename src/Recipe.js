@@ -24,43 +24,30 @@ export default Recipe;
 */
 
 import React from 'react';
-import { Route, Link, useHistory } from 'react-router-dom';
-import RecipeSubmission from './RecipeSubmission';
+import { useHistory } from 'react-router-dom';
 
-const Recipe = () => {
+const Recipe = ({ recipes }) => {
   const history = useHistory();
 
-  const handleAddRecipeClick = () => {
+  const handleAddRecipe = () => {
     history.push('/submit-recipe');
   };
 
-  const handleRecipeSubmission = (recipeName) => {
-    // Handle recipe submission here
-    console.log('Submitted recipe:', recipeName);
-    // Redirect back to recipe page after submission
-    history.push('/');
-  };
-
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-      <button
-      onClick={handleAddRecipeClick}
-      style={{
-      padding: '10px 20px',
-      backgroundColor: '#007bff',
-      color: '#fff',
-      border: 'none',
-      borderRadius: '5px',
-      cursor: 'pointer',
-      marginTop: '0px'
-  }}
->
-  Add Recipe
-</button>
-
-      <Route path="/submit-recipe">
-        <RecipeSubmission onSubmit={handleRecipeSubmission} />
-      </Route>
+    <div>
+      <h1>Recipe Page</h1>
+      {/* Map over the recipes array and render each recipe */}
+      <ul>
+        {recipes.map((recipe, index) => (
+          <li key={index}>
+            <h2>{recipe.name}</h2>
+            <p>Ingredients: {recipe.ingredients.join(', ')}</p>
+            <p>Instructions: {recipe.instructions.join(', ')}</p>
+          </li>
+        ))}
+      </ul>
+      {/* Button to navigate to the Recipe Submission page */}
+      <button onClick={handleAddRecipe}>Add Recipe</button>
     </div>
   );
 };
